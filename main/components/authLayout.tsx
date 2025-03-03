@@ -1,3 +1,5 @@
+"use client";
+
 import { PawPrint } from "lucide-react";
 import AuthenticationView from "./auth";
 
