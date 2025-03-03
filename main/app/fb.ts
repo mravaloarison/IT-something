@@ -28,20 +28,3 @@ export function ContinueWithGoogle() {
 
 // DB
 const db = getFirestore(app);
-
-export async function addUser(data: any) {
-  const userRef = doc(db, "users", data.email);
-  await setDoc(userRef, data);
-}
-
-export async function isUser(email: string) {
-  const docRef = doc(db, "users", email);
-  const docSnap = await getDoc(docRef);
-  return docSnap.exists();
-}
-
-export async function getUser(email: string) {
-  const docRef = doc(db, "users", email);
-  const docSnap = await getDoc(docRef);
-  return docSnap.data();
-}

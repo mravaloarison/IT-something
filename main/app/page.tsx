@@ -1,20 +1,15 @@
 "use client";
 
 import React, { useState, useEffect } from "react";
-import { auth, getUser, isUser } from "./fb";
+import { auth } from "./fb";
 import { onAuthStateChanged } from "firebase/auth";
 import { Button } from "@/components/ui/button";
 import { LogOut } from "lucide-react";
 import { NoUserView } from "@/components/no_user";
 
-interface Data {
-	accountType: string;
-}
-
 export default function Home() {
 	const [user, setUser] = useState<string | null>(null);
 	const [loading, setLoading] = useState(true);
-	const [userType, setUserType] = useState("");
 
 	useEffect(() => {
 		const unsubscribe = onAuthStateChanged(auth, async (authUser) => {
@@ -28,22 +23,6 @@ export default function Home() {
 
 		return () => unsubscribe();
 	}, []);
-
-	useEffect(() => {
-		if (user) {
-			setLoading(true);
-			isUser(user).then((exists) => {
-				getUser(user).then((data) => {
-					if (data) {
-						const userData = data as Data;
-						setUserType(userData.accountType);
-					}
-				});
-
-				setLoading(false);
-			});
-		}
-	}, [user]);
 
 	if (loading) {
 		return (
@@ -62,8 +41,6 @@ export default function Home() {
 						<LogOut />
 						Sign Out
 					</Button>
-
-					<p>{userType}</p>
 				</div>
 			) : (
 				<div className="flex min-h-svh flex-col items-center justify-center gap-6 bg-background p-6 md:p-10">
