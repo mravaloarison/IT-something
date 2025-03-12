@@ -1,3 +1,4 @@
+import { toast } from "sonner";
 import { Button } from "./ui/button";
 import { Input } from "./ui/input";
 import { Textarea } from "./ui/textarea";
@@ -6,13 +7,24 @@ interface OtherJobViewProps {
 	setJobDescription: (description: string) => void;
 	setLoading: (loading: boolean) => void;
 	setChoseOther: (choseOther: boolean) => void;
+	jobSelected: string;
 }
 
 export default function OtherJobView({
 	setJobDescription,
 	setLoading,
 	setChoseOther,
+	jobSelected,
 }: OtherJobViewProps) {
+	const callAPI = async () => {
+		const response = await fetch("/api/is_valid_job", {
+			method: "GET",
+		});
+		const data = await response.json();
+
+		console.log(data);
+	};
+
 	return (
 		<div className="max-w-xl mx-auto p-6 flex flex-col gap-6">
 			<div className="flex flex-col gap-2 chose-other">
@@ -21,14 +33,23 @@ export default function OtherJobView({
 			</div>
 			<div className="flex flex-col gap-2 chose-other">
 				<label className="text-sm font-semibold">Description</label>
-				<Textarea onChange={(e) => setJobDescription(e.target.value)} />
+				<Textarea
+					value={jobSelected}
+					onChange={(e) => setJobDescription(e.target.value)}
+				/>
 			</div>
 			<Button
 				onClick={() => {
-					setLoading(true);
-					setTimeout(() => {
-						setLoading(false);
-					}, 2000);
+					// if (jobSelected === "") {
+					// 	toast.error("Make sure to enter a job", {
+					// 		duration: 3000,
+					// 	});
+
+					// 	return;
+					// }
+
+					// send to the back
+					callAPI();
 				}}
 				className="chose-other"
 			>

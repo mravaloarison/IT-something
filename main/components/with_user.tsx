@@ -122,6 +122,7 @@ export default function WithUserView({ user }: { user: string | null }) {
 								setJobDescription={setJobDescription}
 								setLoading={setLoading}
 								setChoseOther={setChoseOther}
+								jobSelected={JobSelected}
 							/>
 						) : (
 							<JobDescriptionView
