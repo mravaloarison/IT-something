@@ -1,13 +1,10 @@
 import { useEffect, useRef, useState } from "react";
-import { Button } from "./ui/button";
-import { auth } from "../app/fb";
-import { LogOut } from "lucide-react";
 import { useGSAP } from "@gsap/react";
 import gsap from "gsap";
 import JobSelectionView from "./JobSelectionView";
 import JobDescriptionView from "./JobDescriptionView";
 import OtherJobView from "./OtherJobView";
-import { toast } from "sonner";
+import WithUserLayout from "./with_user_layout";
 
 export default function WithUserView({ user }: { user: string | null }) {
 	const [JobSelected, setJobSelected] = useState("");
@@ -86,29 +83,7 @@ export default function WithUserView({ user }: { user: string | null }) {
 	}
 
 	return (
-		<div>
-			<nav className="border p-6 flex justify-between items-center w-full">
-				<p className="font-semibold text-lg">
-					<span className="text-xl px-1.5 animate-bounce">👋</span>{" "}
-					{user}
-				</p>
-				<Button
-					variant="secondary"
-					onClick={() => {
-						auth.signOut();
-
-						setTimeout(() => {
-							toast.success("You have been signed out", {
-								duration: 3000,
-							});
-						}, 500);
-					}}
-				>
-					<LogOut />
-					Sign Out
-				</Button>
-			</nav>
-
+		<WithUserLayout user={user}>
 			<main>
 				{JobSelected === "" && !ChoseOther ? (
 					<JobSelectionView
@@ -120,7 +95,8 @@ export default function WithUserView({ user }: { user: string | null }) {
 						{ChoseOther ? (
 							<OtherJobView
 								setJobDescription={setJobDescription}
-								setLoading={setLoading}
+								jobDescription={JobDescription}
+								setJobSelected={setJobSelected}
 								setChoseOther={setChoseOther}
 								jobSelected={JobSelected}
 							/>
@@ -135,6 +111,6 @@ export default function WithUserView({ user }: { user: string | null }) {
 					</>
 				)}
 			</main>
-		</div>
+		</WithUserLayout>
 	);
 }
