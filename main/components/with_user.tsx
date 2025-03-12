@@ -7,6 +7,7 @@ import gsap from "gsap";
 import JobSelectionView from "./JobSelectionView";
 import JobDescriptionView from "./JobDescriptionView";
 import OtherJobView from "./OtherJobView";
+import { toast } from "sonner";
 
 export default function WithUserView({ user }: { user: string | null }) {
 	const [JobSelected, setJobSelected] = useState("");
@@ -91,7 +92,18 @@ export default function WithUserView({ user }: { user: string | null }) {
 					<span className="text-xl px-1.5 animate-bounce">👋</span>{" "}
 					{user}
 				</p>
-				<Button variant="secondary" onClick={() => auth.signOut()}>
+				<Button
+					variant="secondary"
+					onClick={() => {
+						auth.signOut();
+
+						setTimeout(() => {
+							toast.success("You have been signed out", {
+								duration: 3000,
+							});
+						}, 500);
+					}}
+				>
 					<LogOut />
 					Sign Out
 				</Button>
