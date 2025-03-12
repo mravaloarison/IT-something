@@ -3,9 +3,8 @@
 import React, { useState, useEffect } from "react";
 import { auth } from "./fb";
 import { onAuthStateChanged } from "firebase/auth";
-import { Button } from "@/components/ui/button";
-import { LogOut } from "lucide-react";
 import { NoUserView } from "@/components/no_user";
+import WithUserView from "@/components/with_user";
 
 export default function Home() {
 	const [user, setUser] = useState<string | null>(null);
@@ -14,7 +13,7 @@ export default function Home() {
 	useEffect(() => {
 		const unsubscribe = onAuthStateChanged(auth, async (authUser) => {
 			if (authUser) {
-				setUser(authUser.email ?? "");
+				setUser(authUser.displayName ?? "");
 			} else {
 				setUser(null);
 			}
@@ -35,13 +34,7 @@ export default function Home() {
 	return (
 		<>
 			{user ? (
-				<div className="flex flex-col items-center gap-4 h-screen justify-center">
-					<p>Hello {user}!</p>
-					<Button variant="outline" onClick={() => auth.signOut()}>
-						<LogOut />
-						Sign Out
-					</Button>
-				</div>
+				<WithUserView user={user} />
 			) : (
 				<div className="flex min-h-svh flex-col items-center justify-center gap-6 bg-background p-6 md:p-10">
 					<div className="w-full max-w-sm">
