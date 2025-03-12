@@ -14,11 +14,24 @@ export function NoUserView() {
 		const items = document.querySelectorAll(".item");
 		tl.current.from(items, {
 			opacity: 0,
-			y: 20,
+			x: 10,
 			stagger: 0.1,
 			ease: "power2.inOut",
 		});
 	});
+
+	function exitNoUserView(location: string) {
+		const items = document.querySelectorAll(".item");
+		gsap.to(items, {
+			opacity: 0,
+			y: -10,
+			stagger: 0.1,
+			ease: "power2.inOut",
+			onComplete: () => {
+				window.location.href = location;
+			},
+		});
+	}
 
 	return (
 		<div className="flex flex-col gap-6">
@@ -43,13 +56,20 @@ export function NoUserView() {
 					</div>
 				</div>
 				<div className="flex flex-col gap-6">
-					<Button variant="outline" className="w-full item">
+					<Button
+						variant="outline"
+						className="w-full item"
+						onClick={() => exitNoUserView("/sign_up")}
+					>
 						<UserRoundPenIcon />
-						<a href="/sign_up">Sign Up</a>
+						<span>Sign Up</span>
 					</Button>
-					<Button className="w-full item">
+					<Button
+						className="w-full item"
+						onClick={() => exitNoUserView("/sign_in")}
+					>
 						<KeyRound />
-						<a href="/sign_in">Sign In</a>
+						<span>Sign In</span>
 					</Button>
 				</div>
 			</div>
