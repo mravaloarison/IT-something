@@ -2,14 +2,14 @@
 
 import InterviewQuestionnaire from "@/components/InterviewQuestionnaire";
 import Timer from "@/components/Timer";
+import { Button } from "@/components/ui/button";
 import WithUserLayout from "@/components/with_user_layout";
+import { Frown, Laugh } from "lucide-react";
 import { useEffect, useState } from "react";
 import { toast } from "sonner";
 
 export default function InterviewPage() {
 	const [interviewQuestions, setInterviewQuestions] = useState([]);
-	const [currentQuestion, setCurrentQuestion] = useState(0);
-	const [answers, setAnswers] = useState<string[]>([]);
 	const [loadingInterview, setLoadingInterview] = useState(false);
 	const [error, setError] = useState("");
 
@@ -78,8 +78,8 @@ export default function InterviewPage() {
 							) : (
 								<>
 									{interviewQuestions.length > 0 ? (
-										<>
-											<div className="flex justify-between items-center p-6 text-center">
+										<div className="flex flex-col gap-6 justify-center interview">
+											<div className="flex justify-between items-center text-center">
 												<Timer />
 											</div>
 											<InterviewQuestionnaire
@@ -87,7 +87,22 @@ export default function InterviewPage() {
 													interviewQuestions
 												}
 											/>
-										</>
+											<Button
+												size="lg"
+												className="uppercase"
+											>
+												<Laugh />
+												Ready for feedback
+											</Button>
+											<Button
+												size="lg"
+												variant="secondary"
+												className="uppercase"
+											>
+												<Frown />
+												Change job
+											</Button>
+										</div>
 									) : (
 										<p>No interview questions found</p>
 									)}
