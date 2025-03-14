@@ -106,6 +106,7 @@ export default function WithUserView({ user }: { user: string | null }) {
 								setJobDescription={setJobDescription}
 								setLoading={setLoading}
 								setJobSelected={setJobSelected}
+								JobDescription={JobDescription}
 							/>
 						)}
 					</>

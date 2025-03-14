@@ -4,7 +4,6 @@ import { Input } from "./ui/input";
 import { Textarea } from "./ui/textarea";
 
 import { useState } from "react";
-import { set } from "zod";
 
 interface OtherJobViewProps {
 	setJobDescription: (description: string) => void;
@@ -36,10 +35,15 @@ export default function OtherJobView({
 			const data = await response.json();
 
 			if (data.res) {
-				// setChoseOther(false);
 				toast.success("Job is valid", {
 					duration: 3000,
 				});
+
+				// put in local storage
+				localStorage.setItem("job", jobSelected);
+				localStorage.setItem("description", jobDescription);
+
+				window.location.href = "/interview";
 			} else {
 				toast.warning("Please enter a valid job", {
 					duration: 3000,
@@ -50,8 +54,6 @@ export default function OtherJobView({
 				duration: 3000,
 			});
 		}
-
-		setIsLoading(false);
 	};
 
 	return (
@@ -76,6 +78,7 @@ export default function OtherJobView({
 			<Button
 				onClick={() => {
 					setIsLoading(true);
+
 					if (jobSelected === "") {
 						toast.error("Make sure to enter a job", {
 							duration: 3000,
@@ -85,6 +88,7 @@ export default function OtherJobView({
 					}
 					// send to the back
 					callAPI();
+					setIsLoading(false);
 				}}
 				disabled={isLoading}
 				className="chose-other"
