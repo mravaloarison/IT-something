@@ -1,6 +1,7 @@
 "use client";
 
 import InterviewQuestionnaire from "@/components/InterviewQuestionnaire";
+import Timer from "@/components/Timer";
 import WithUserLayout from "@/components/with_user_layout";
 import { useEffect, useState } from "react";
 import { toast } from "sonner";
@@ -77,11 +78,16 @@ export default function InterviewPage() {
 							) : (
 								<>
 									{interviewQuestions.length > 0 ? (
-										<InterviewQuestionnaire
-											interviewQuestions={
-												interviewQuestions
-											}
-										/>
+										<>
+											<div className="flex justify-between items-center p-6 text-center">
+												<Timer />
+											</div>
+											<InterviewQuestionnaire
+												interviewQuestions={
+													interviewQuestions
+												}
+											/>
+										</>
 									) : (
 										<p>No interview questions found</p>
 									)}
