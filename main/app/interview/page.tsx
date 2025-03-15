@@ -125,16 +125,14 @@ export default function InterviewPage() {
 														y: -50,
 														duration: 0.5,
 														onComplete: () => {
-															setInterviewQuestions(
-																[]
-															);
-
 															localStorage.removeItem(
 																"job"
 															);
 															localStorage.removeItem(
 																"description"
 															);
+															window.location.href =
+																"/";
 														},
 													});
 												}}
