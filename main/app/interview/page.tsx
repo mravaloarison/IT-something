@@ -7,6 +7,9 @@ import WithUserLayout from "@/components/with_user_layout";
 import { Frown, Laugh } from "lucide-react";
 import { useEffect, useState } from "react";
 import { toast } from "sonner";
+import gsap from "gsap";
+import { auth } from "../fb";
+import { onAuthStateChanged } from "firebase/auth";
 
 export default function InterviewPage() {
 	const [interviewQuestions, setInterviewQuestions] = useState([]);
@@ -44,7 +47,25 @@ export default function InterviewPage() {
 			}
 		} else {
 			setLoadingInterview(false);
+
+			gsap.from(".interview", {
+				opacity: 0,
+				y: -50,
+				duration: 0.5,
+			});
 		}
+
+		const unsubscribe = onAuthStateChanged(auth, async (authUser) => {
+			if (!authUser) {
+				window.location.href = "/";
+
+				toast.success("You have been logged out", {
+					duration: 3000,
+				});
+			}
+		});
+
+		return () => unsubscribe();
 	}, [interviewQuestions]);
 
 	const generateInterviewQuestions = async (
@@ -98,6 +119,25 @@ export default function InterviewPage() {
 												size="lg"
 												variant="secondary"
 												className="uppercase"
+												onClick={() => {
+													gsap.to(".interview", {
+														opacity: 0,
+														y: -50,
+														duration: 0.5,
+														onComplete: () => {
+															setInterviewQuestions(
+																[]
+															);
+
+															localStorage.removeItem(
+																"job"
+															);
+															localStorage.removeItem(
+																"description"
+															);
+														},
+													});
+												}}
 											>
 												<Frown />
 												Change job

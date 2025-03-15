@@ -26,7 +26,7 @@ export default function Home() {
 	if (loading) {
 		return (
 			<div className="flex h-screen justify-center items-center">
-				<p>Loading...</p>
+				<p>...</p>
 			</div>
 		);
 	}

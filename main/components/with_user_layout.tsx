@@ -3,6 +3,7 @@ import { auth } from "../app/fb";
 import { LogOut } from "lucide-react";
 import { toast } from "sonner";
 import React from "react";
+import Footer from "./footer";
 
 export default function WithUserLayout(props: any) {
 	const user = auth.currentUser?.displayName;
@@ -31,6 +32,7 @@ export default function WithUserLayout(props: any) {
 				</Button>
 			</nav>
 			{props.children}
+			<Footer />
 		</div>
 	);
 }
