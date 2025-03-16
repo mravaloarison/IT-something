@@ -44,8 +44,29 @@ export default function InterviewPage() {
 			answers: answers,
 		};
 
+		const formData = new FormData();
+
+		formData.append("job-title", localStorage.getItem("job") || "");
+		formData.append("playloud", JSON.stringify(playloud));
+
 		// send to the backend
-		console.log(playloud);
+		fetch("/api/get_feedback", {
+			method: "POST",
+			body: formData,
+		})
+			.then((res) => res.json())
+			.then((data) => {
+				toast.success(data.res.join("\n"), {
+					duration: 10000,
+				});
+
+				console.log(data.res);
+			})
+			.catch(() => {
+				toast.error("Error getting feedback", {
+					duration: 3000,
+				});
+			});
 	};
 
 	useEffect(() => {

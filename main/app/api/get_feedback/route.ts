@@ -1,11 +1,15 @@
 import { GoogleGenerativeAI } from "@google/generative-ai";
 
+interface PlayLoud {
+    questions: string[];
+    answers: string[];
+}
 
 export async function POST(request: Request): Promise<Response> {
     const formData = await request.formData();
     
-    const jobTitle = formData.get("job-title") as string;
-    const jobDescription = formData.get("job-description") as string;
+    const jobTitle = formData.get("job-title") as string
+    const playoud = JSON.parse(formData.get("playoud") as string) as PlayLoud;
 
     const genAI = new GoogleGenerativeAI(process.env.GEMINI_API_KEY as string);
 
@@ -16,9 +20,11 @@ export async function POST(request: Request): Promise<Response> {
         },
     });
 
-    const prompt = `Generate 5 interview questions for the following: 
-        -Job title: ${jobTitle}
-        -Job description: ${jobDescription}
+    const prompt = `You are giving feedback to users after giving them a mock interview.
+        Here is a brief overview of the script on how it went
+        - Job title: ${jobTitle}
+        - Interview questions asked: ${playoud.questions.join(", ")}
+        - Answers given by the user: ${playoud.answers.join(", ")}
 
         Return the output in a JSON object format with the following structure:
             res: string[]
