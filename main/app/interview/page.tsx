@@ -19,6 +19,7 @@ import {
 	DialogDescription,
 	DialogTitle,
 } from "@/components/ui/dialog";
+import Loading from "@/components/Loading";
 
 export default function InterviewPage() {
 	const [interviewQuestions, setInterviewQuestions] = useState([]);
@@ -151,12 +152,10 @@ export default function InterviewPage() {
 					) : (
 						<>
 							{loadingInterview ? (
-								<div className="text-center py-10">
-									Loading interview ...
-								</div>
+								<Loading />
 							) : (
 								<>
-									{interviewQuestions.length > 0 ?? (
+									{interviewQuestions.length > 0 ? (
 										<div className="flex flex-col gap-6 justify-center interview">
 											<div className="flex justify-between items-center text-center">
 												<Timer />
@@ -202,6 +201,8 @@ export default function InterviewPage() {
 												Change job
 											</Button>
 										</div>
+									) : (
+										<Loading />
 									)}
 								</>
 							)}
