@@ -1,26 +1,33 @@
 import { Button } from "@/components/ui/button";
 import { Textarea } from "@/components/ui/textarea";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { ChevronLeft, ChevronRight, Mic } from "lucide-react";
 
 interface InterviewQuestionnaireProps {
 	interviewQuestions: string[];
+	answers: string[];
+	setAnswers: (answers: string[]) => void;
 }
 
 export default function InterviewQuestionnaire({
 	interviewQuestions,
+	answers,
+	setAnswers,
 }: InterviewQuestionnaireProps) {
 	const [currentQuestion, setCurrentQuestion] = useState(0);
-	const [answers, setAnswers] = useState<string[]>(
-		Array(interviewQuestions.length).fill("")
-	);
 
 	const handleInputChange = (value: string) => {
 		const updatedAnswers = [...answers];
 		updatedAnswers[currentQuestion] = value;
 		setAnswers(updatedAnswers);
 	};
+
+	useEffect(() => {
+		if (interviewQuestions.length > 0) {
+			setAnswers(Array(interviewQuestions.length).fill(""));
+		}
+	}, [interviewQuestions]);
 
 	return (
 		<Card>
@@ -36,8 +43,9 @@ export default function InterviewQuestionnaire({
 					{interviewQuestions[currentQuestion]}
 				</h2>
 				<Textarea
+					key={currentQuestion}
 					className="w-full"
-					value={answers[currentQuestion]}
+					value={answers[currentQuestion] || ""}
 					onChange={(e) => handleInputChange(e.target.value)}
 					placeholder="Type your answer here..."
 				/>

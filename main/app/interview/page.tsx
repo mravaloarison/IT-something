@@ -10,11 +10,42 @@ import { toast } from "sonner";
 import gsap from "gsap";
 import { auth } from "../fb";
 import { onAuthStateChanged } from "firebase/auth";
+import {
+	Dialog,
+	DialogFooter,
+	DialogHeader,
+	DialogClose,
+	DialogContent,
+	DialogDescription,
+	DialogTitle,
+} from "@/components/ui/dialog";
 
 export default function InterviewPage() {
 	const [interviewQuestions, setInterviewQuestions] = useState([]);
 	const [loadingInterview, setLoadingInterview] = useState(false);
 	const [error, setError] = useState("");
+	const [answers, setAnswers] = useState(
+		Array(interviewQuestions.length).fill("")
+	);
+	const [isDialogOpen, setIsDialogOpen] = useState(false);
+
+	const handleGetFeedback = () => {
+		if (answers.some((answer) => answer === "")) {
+			setIsDialogOpen(true);
+		} else {
+			getFeedback();
+		}
+	};
+
+	const getFeedback = () => {
+		const playloud = {
+			questions: interviewQuestions,
+			answers: answers,
+		};
+
+		// send to the backend
+		console.log(playloud);
+	};
 
 	useEffect(() => {
 		if (interviewQuestions.length === 0) {
@@ -88,6 +119,31 @@ export default function InterviewPage() {
 
 	return (
 		<WithUserLayout>
+			<Dialog open={isDialogOpen} onOpenChange={setIsDialogOpen}>
+				<DialogContent>
+					<DialogHeader>
+						<DialogTitle>Are you sure?</DialogTitle>
+						<DialogDescription>
+							You have not answered all questions. Are you sure
+							you want to proceed?
+						</DialogDescription>
+					</DialogHeader>
+					<DialogFooter>
+						<DialogClose asChild>
+							<Button variant="secondary">Cancel</Button>
+						</DialogClose>
+						<Button
+							variant="destructive"
+							onClick={() => {
+								setIsDialogOpen(false);
+								getFeedback();
+							}}
+						>
+							Proceed
+						</Button>
+					</DialogFooter>
+				</DialogContent>
+			</Dialog>
 			<main className="max-w-xl mx-auto p-6">
 				<div>
 					{error ? (
@@ -95,10 +151,12 @@ export default function InterviewPage() {
 					) : (
 						<>
 							{loadingInterview ? (
-								"Loading ..."
+								<div className="text-center py-10">
+									Loading interview ...
+								</div>
 							) : (
 								<>
-									{interviewQuestions.length > 0 ? (
+									{interviewQuestions.length > 0 ?? (
 										<div className="flex flex-col gap-6 justify-center interview">
 											<div className="flex justify-between items-center text-center">
 												<Timer />
@@ -107,13 +165,16 @@ export default function InterviewPage() {
 												interviewQuestions={
 													interviewQuestions
 												}
+												answers={answers}
+												setAnswers={setAnswers}
 											/>
 											<Button
 												size="lg"
 												className="uppercase"
+												onClick={handleGetFeedback}
 											>
 												<Laugh />
-												Ready for feedback
+												Get feedback
 											</Button>
 											<Button
 												size="lg"
@@ -141,8 +202,6 @@ export default function InterviewPage() {
 												Change job
 											</Button>
 										</div>
-									) : (
-										<p>No interview questions found</p>
 									)}
 								</>
 							)}
