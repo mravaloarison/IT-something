@@ -56,11 +56,13 @@ export default function InterviewPage() {
 		})
 			.then((res) => res.json())
 			.then((data) => {
-				toast.success(data.res.join("\n"), {
+				toast.success("Data ready", {
 					duration: 10000,
 				});
 
-				console.log(data.res);
+				console.log("playloud", playloud);
+
+				console.log(data);
 			})
 			.catch(() => {
 				toast.error("Error getting feedback", {
