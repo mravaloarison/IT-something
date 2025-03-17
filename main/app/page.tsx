@@ -5,6 +5,7 @@ import { auth } from "./fb";
 import { onAuthStateChanged } from "firebase/auth";
 import { NoUserView } from "@/components/no_user";
 import WithUserView from "@/components/with_user";
+import Loading from "@/components/Loading";
 
 export default function Home() {
 	const [user, setUser] = useState<string | null>(null);
@@ -13,7 +14,7 @@ export default function Home() {
 	useEffect(() => {
 		const unsubscribe = onAuthStateChanged(auth, async (authUser) => {
 			if (authUser) {
-				setUser(authUser.displayName ?? "");
+				setUser(authUser.displayName || authUser.email || "");
 			} else {
 				setUser(null);
 			}
@@ -26,7 +27,7 @@ export default function Home() {
 	if (loading) {
 		return (
 			<div className="flex h-screen justify-center items-center">
-				<p>...</p>
+				<Loading />
 			</div>
 		);
 	}

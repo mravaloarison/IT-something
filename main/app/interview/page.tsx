@@ -29,6 +29,19 @@ export default function InterviewPage() {
 		Array(interviewQuestions.length).fill("")
 	);
 	const [isDialogOpen, setIsDialogOpen] = useState(false);
+	const [user, setUser] = useState<string | null>(null);
+
+	useEffect(() => {
+		const unsubscribe = onAuthStateChanged(auth, async (authUser) => {
+			if (authUser) {
+				setUser(authUser.displayName || authUser.email || "");
+			} else {
+				setUser(null);
+			}
+		});
+
+		return () => unsubscribe();
+	}, []);
 
 	const handleGetFeedback = () => {
 		if (answers.some((answer) => answer === "")) {
@@ -105,8 +118,8 @@ export default function InterviewPage() {
 
 			gsap.from(".interview", {
 				opacity: 0,
-				y: -50,
-				duration: 0.5,
+				x: 50,
+				duration: 1,
 			});
 		}
 
@@ -141,8 +154,16 @@ export default function InterviewPage() {
 		return data;
 	};
 
+	if (loadingInterview) {
+		return (
+			<div className="flex h-screen justify-center items-center">
+				<Loading />
+			</div>
+		);
+	}
+
 	return (
-		<WithUserLayout>
+		<WithUserLayout user={user}>
 			<Dialog open={isDialogOpen} onOpenChange={setIsDialogOpen}>
 				<DialogContent>
 					<DialogHeader>
@@ -174,60 +195,51 @@ export default function InterviewPage() {
 						<p className="text-red-500">{error}</p>
 					) : (
 						<>
-							{loadingInterview ? (
-								<Loading />
+							{interviewQuestions.length > 0 ? (
+								<div className="flex flex-col gap-6 justify-center interview">
+									<div className="flex justify-between items-center text-center">
+										<Timer />
+									</div>
+									<InterviewQuestionnaire
+										interviewQuestions={interviewQuestions}
+										answers={answers}
+										setAnswers={setAnswers}
+									/>
+									<Button
+										size="lg"
+										className="uppercase"
+										onClick={handleGetFeedback}
+									>
+										<Laugh />
+										Get feedback
+									</Button>
+									<Button
+										size="lg"
+										variant="secondary"
+										className="uppercase"
+										onClick={() => {
+											gsap.to(".interview", {
+												opacity: 0,
+												y: -50,
+												duration: 0.5,
+												onComplete: () => {
+													localStorage.removeItem(
+														"job"
+													);
+													localStorage.removeItem(
+														"description"
+													);
+													window.location.href = "/";
+												},
+											});
+										}}
+									>
+										<Frown />
+										Change job
+									</Button>
+								</div>
 							) : (
-								<>
-									{interviewQuestions.length > 0 ? (
-										<div className="flex flex-col gap-6 justify-center interview">
-											<div className="flex justify-between items-center text-center">
-												<Timer />
-											</div>
-											<InterviewQuestionnaire
-												interviewQuestions={
-													interviewQuestions
-												}
-												answers={answers}
-												setAnswers={setAnswers}
-											/>
-											<Button
-												size="lg"
-												className="uppercase"
-												onClick={handleGetFeedback}
-											>
-												<Laugh />
-												Get feedback
-											</Button>
-											<Button
-												size="lg"
-												variant="secondary"
-												className="uppercase"
-												onClick={() => {
-													gsap.to(".interview", {
-														opacity: 0,
-														y: -50,
-														duration: 0.5,
-														onComplete: () => {
-															localStorage.removeItem(
-																"job"
-															);
-															localStorage.removeItem(
-																"description"
-															);
-															window.location.href =
-																"/";
-														},
-													});
-												}}
-											>
-												<Frown />
-												Change job
-											</Button>
-										</div>
-									) : (
-										<Loading />
-									)}
-								</>
+								<></>
 							)}
 						</>
 					)}

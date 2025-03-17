@@ -4,6 +4,7 @@ import { PawPrint } from "lucide-react";
 import AuthenticationView from "./auth";
 import { useGSAP } from "@gsap/react";
 import gsap from "gsap";
+import Link from "next/link";
 
 interface SignUpPageProps {
 	args: {
@@ -45,10 +46,15 @@ export default function AuthSignUp({ args }: SignUpPageProps) {
 				<div className="item opacity-0">
 					{<AuthenticationView signup={args.signup} />}
 				</div>
-				<div className="item opacity-0 text-balance text-center text-xs text-gray-500 [&_a]:underline [&_a]:underline-offset-4 [&_a]:hover:text-gray-900  dark:text-gray-400 dark:[&_a]:hover:text-gray-50">
-					By clicking continue, you agree to our{" "}
-					<a href="/">Terms of Service</a> and{" "}
-					<a href="/">Privacy Policy</a>.
+				<div className="item opacity-0 text-balance text-center text-xs text-gray-500   dark:text-gray-400 ">
+					By continuing, you accept our{" "}
+					<Link
+						href="/"
+						target="_blank"
+						className="font-semibold hover:underline"
+					>
+						Terms and Conditions.
+					</Link>
 				</div>
 			</div>
 		</div>

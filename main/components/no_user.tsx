@@ -4,6 +4,7 @@ import { Button } from "@/components/ui/button";
 import { useGSAP } from "@gsap/react";
 import gsap from "gsap";
 import { useRef } from "react";
+import Footer from "./footer";
 
 export function NoUserView() {
 	const tl = useRef(gsap.timeline());
@@ -71,6 +72,9 @@ export function NoUserView() {
 						<KeyRound />
 						<span>Sign In</span>
 					</Button>
+				</div>
+				<div className="item">
+					<Footer />
 				</div>
 			</div>
 		</div>

@@ -60,7 +60,7 @@ export default function SignUpForm() {
 
 		createUserWithEmailAndPassword(auth, data.email, data.password)
 			.then(() => {
-				window.location.href = "/";
+				window.location.href = "/sign_in";
 			})
 			.catch((error) => {
 				const errorCode = error.code;
