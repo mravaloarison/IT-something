@@ -43,7 +43,7 @@ export default function AuthenticationView({
 					</div>
 					<Button onClick={ContinueWithGoogle} variant="outline">
 						<Image
-							src="https://img.icons8.com/?size=100&id=17949&format=png&color=000000"
+							src="https://img.icons8.com/?size=100&id=60984&format=png&color=000000"
 							className="w-5 h-5"
 							alt="Google"
 						/>
