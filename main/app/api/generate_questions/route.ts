@@ -16,7 +16,7 @@ export async function POST(request: Request): Promise<Response> {
         },
     });
 
-    const prompt = `Generate 5 interview questions for the following: 
+    const prompt = `Generate 3 interview questions for the following: 
         -Job title: ${jobTitle}
         -Job description: ${jobDescription}
 

@@ -2,7 +2,18 @@ import { Button } from "@/components/ui/button";
 import { Textarea } from "@/components/ui/textarea";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { useState, useEffect } from "react";
-import { ChevronLeft, ChevronRight, Mic } from "lucide-react";
+import {
+	ChevronLeft,
+	ChevronRight,
+	Mic,
+	TriangleAlert,
+	RefreshCcw,
+	StopCircle,
+} from "lucide-react";
+import SpeechRecognition, {
+	useSpeechRecognition,
+} from "react-speech-recognition";
+import Link from "next/link";
 
 interface InterviewQuestionnaireProps {
 	interviewQuestions: string[];
@@ -15,6 +26,14 @@ export default function InterviewQuestionnaire({
 	answers,
 	setAnswers,
 }: InterviewQuestionnaireProps) {
+	const {
+		transcript,
+		listening,
+		resetTranscript,
+		browserSupportsSpeechRecognition,
+		isMicrophoneAvailable,
+	} = useSpeechRecognition();
+
 	const [currentQuestion, setCurrentQuestion] = useState(0);
 
 	const handleInputChange = (value: string) => {
@@ -23,11 +42,62 @@ export default function InterviewQuestionnaire({
 		setAnswers(updatedAnswers);
 	};
 
+	const goToNextQuestion = () => {
+		const updatedAnswers = [...answers];
+		updatedAnswers[currentQuestion] = transcript;
+		setAnswers(updatedAnswers);
+
+		resetTranscript();
+
+		setCurrentQuestion((prev) => prev + 1);
+	};
+
+	const goToPreviousQuestion = () => {
+		setCurrentQuestion((prev) => prev - 1);
+	};
+
+	if (!browserSupportsSpeechRecognition) {
+		return (
+			<div className="h-screen w-screen flex flex-col gap-6 items-center p-6 justify-center">
+				<TriangleAlert size={48} />
+				<p className="font-semibold text-lg">
+					Browser doesn't support speech recognition.
+				</p>
+				<Link href="/" className="text-blue-500">
+					Go back
+				</Link>
+			</div>
+		);
+	}
+
+	if (!isMicrophoneAvailable) {
+		return (
+			<div className="h-screen w-screen flex flex-col gap-6 items-center p-6 justify-center">
+				<TriangleAlert size={48} />
+				<p className="font-semibold text-lg">
+					Microphone is not available. Please check your microphone
+					settings.
+				</p>
+				<Link href="/" className="text-blue-500">
+					Go back
+				</Link>
+			</div>
+		);
+	}
+
 	useEffect(() => {
 		if (interviewQuestions.length > 0) {
 			setAnswers(Array(interviewQuestions.length).fill(""));
 		}
-	}, [interviewQuestions, setAnswers]);
+	}, [interviewQuestions]);
+
+	useEffect(() => {
+		if (transcript && currentQuestion < interviewQuestions.length) {
+			const updatedAnswers = [...answers];
+			updatedAnswers[currentQuestion] = transcript;
+			setAnswers(updatedAnswers);
+		}
+	}, [transcript, currentQuestion]);
 
 	return (
 		<Card>
@@ -53,25 +123,47 @@ export default function InterviewQuestionnaire({
 					<Button
 						variant="outline"
 						disabled={currentQuestion === 0}
-						onClick={() => setCurrentQuestion((prev) => prev - 1)}
+						onClick={goToPreviousQuestion}
 						size="icon"
 					>
 						<ChevronLeft />
 					</Button>
-					<Button
-						variant="ghost"
-						className="flex items-center gap-2"
-						disabled
-					>
-						<Mic size={16} /> Record
-					</Button>
+					<div className="flex gap-6 items-center">
+						{listening ? (
+							<Button
+								variant="secondary"
+								className="animate-pulse"
+								onClick={SpeechRecognition.stopListening}
+							>
+								<StopCircle />
+								Stop recording
+							</Button>
+						) : (
+							<Button
+								variant="ghost"
+								onClick={() =>
+									SpeechRecognition.startListening({
+										continuous: true,
+									})
+								}
+							>
+								<Mic /> record
+							</Button>
+						)}
+
+						{transcript && (
+							<Button variant="ghost" onClick={resetTranscript}>
+								<RefreshCcw />
+							</Button>
+						)}
+					</div>
 					<Button
 						variant="outline"
 						disabled={
 							!answers[currentQuestion] ||
 							currentQuestion === interviewQuestions.length - 1
 						}
-						onClick={() => setCurrentQuestion((prev) => prev + 1)}
+						onClick={goToNextQuestion}
 						size="icon"
 					>
 						<ChevronRight />

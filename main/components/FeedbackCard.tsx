@@ -32,8 +32,16 @@ export function FeedbackCard({ feedbackItem }: FeedbackCardProps) {
 				<p className="text-sm text-gray-700">{feedbackItem.feedback}</p>
 				<div className="mt-4">
 					<span className="text-sm font-medium">Score: </span>
-					<span className="text-sm text-gray-700">
-						{feedbackItem.score}/5
+					<span
+						className={`text-sm font-semibold ${
+							feedbackItem.score >= 8
+								? "text-green-600"
+								: feedbackItem.score >= 5
+								? "text-yellow-600"
+								: "text-red-600"
+						}`}
+					>
+						{feedbackItem.score}/10
 					</span>
 				</div>
 			</CardContent>
