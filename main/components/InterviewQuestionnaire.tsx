@@ -58,7 +58,11 @@ export default function InterviewQuestionnaire({
 					>
 						<ChevronLeft />
 					</Button>
-					<Button variant="ghost" className="flex items-center gap-2">
+					<Button
+						variant="ghost"
+						className="flex items-center gap-2"
+						disabled
+					>
 						<Mic size={16} /> Record
 					</Button>
 					<Button
