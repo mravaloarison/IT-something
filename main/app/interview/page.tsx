@@ -4,7 +4,7 @@ import InterviewQuestionnaire from "@/components/InterviewQuestionnaire";
 import Timer from "@/components/Timer";
 import { Button } from "@/components/ui/button";
 import WithUserLayout from "@/components/with_user_layout";
-import { Frown, Laugh } from "lucide-react";
+import { Frown, Laugh, Loader } from "lucide-react";
 import { useEffect, useState } from "react";
 import { toast } from "sonner";
 import gsap from "gsap";
@@ -20,6 +20,7 @@ import {
 	DialogTitle,
 } from "@/components/ui/dialog";
 import Loading from "@/components/Loading";
+import { useRouter } from "next/compat/router";
 
 export default function InterviewPage() {
 	const [interviewQuestions, setInterviewQuestions] = useState([]);
@@ -30,6 +31,8 @@ export default function InterviewPage() {
 	);
 	const [isDialogOpen, setIsDialogOpen] = useState(false);
 	const [user, setUser] = useState<string | null>(null);
+	const [isFeedbackLoading, setIsFeedbackLoading] = useState(false);
+	const router = useRouter();
 
 	useEffect(() => {
 		const unsubscribe = onAuthStateChanged(auth, async (authUser) => {
@@ -52,6 +55,8 @@ export default function InterviewPage() {
 	};
 
 	const getFeedback = () => {
+		setIsFeedbackLoading(true);
+
 		const playloud = {
 			questions: interviewQuestions,
 			answers: answers,
@@ -73,14 +78,17 @@ export default function InterviewPage() {
 					duration: 10000,
 				});
 
-				console.log("playloud", playloud);
+				setIsFeedbackLoading(false);
 
-				console.log(data);
+				localStorage.setItem("feedbackData", JSON.stringify(data));
+				window.location.href = "/feedback";
 			})
 			.catch(() => {
 				toast.error("Error getting feedback", {
 					duration: 3000,
 				});
+
+				setIsFeedbackLoading(false);
 			});
 	};
 
@@ -209,14 +217,27 @@ export default function InterviewPage() {
 										size="lg"
 										className="uppercase"
 										onClick={handleGetFeedback}
+										disabled={isFeedbackLoading}
 									>
-										<Laugh />
-										Get feedback
+										{isFeedbackLoading ? (
+											<>
+												<Loader className="animate-spin" />
+												<span className="animate-pulse">
+													Loading
+												</span>
+											</>
+										) : (
+											<>
+												<Laugh />
+												Get feedback
+											</>
+										)}
 									</Button>
 									<Button
 										size="lg"
 										variant="secondary"
 										className="uppercase"
+										disabled={isFeedbackLoading}
 										onClick={() => {
 											gsap.to(".interview", {
 												opacity: 0,

@@ -5,6 +5,7 @@ import JobSelectionView from "./JobSelectionView";
 import JobDescriptionView from "./JobDescriptionView";
 import OtherJobView from "./OtherJobView";
 import WithUserLayout from "./with_user_layout";
+import Loading from "./Loading";
 
 export default function WithUserView({ user }: { user: string | null }) {
 	const [JobSelected, setJobSelected] = useState("");
@@ -77,7 +78,7 @@ export default function WithUserView({ user }: { user: string | null }) {
 	if (loading) {
 		return (
 			<div className="flex h-screen justify-center items-center">
-				<p>Loading...</p>
+				<Loading />
 			</div>
 		);
 	}

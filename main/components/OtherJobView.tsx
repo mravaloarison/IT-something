@@ -48,11 +48,13 @@ export default function OtherJobView({
 				toast.warning("Please enter a valid job", {
 					duration: 3000,
 				});
+				setIsLoading(false);
 			}
 		} catch (e) {
 			toast.error("Please try again, something went wrong", {
 				duration: 3000,
 			});
+			setIsLoading(false);
 		}
 	};
 
@@ -88,7 +90,6 @@ export default function OtherJobView({
 					}
 					// send to the back
 					callAPI();
-					setIsLoading(false);
 				}}
 				disabled={isLoading}
 				className="chose-other"
