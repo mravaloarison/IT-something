@@ -44,7 +44,7 @@ export default function JobDescriptionView({
 					duration: 3000,
 				});
 			}
-		} catch (e) {
+		} catch {
 			toast.error("Please try again, something went wrong", {
 				duration: 3000,
 			});

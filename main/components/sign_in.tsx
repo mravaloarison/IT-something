@@ -56,10 +56,18 @@ export default function SignInForm() {
 				const code = error.code;
 				const message = error.message;
 
-				code === "auth/invalid-credential"
-					? toast.warning("Invalid credential")
-					: toast.error(message);
+				handleCode(code, message);
 			});
+	}
+
+	function handleCode(code: string, message: string) {
+		if (code === "auth/invalid-credential") {
+			toast.warning("Invalid credential");
+			console.log(message);
+		} else {
+			toast.error("Something went wrong");
+			console.log(message);
+		}
 	}
 
 	return (

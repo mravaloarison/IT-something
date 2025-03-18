@@ -5,7 +5,10 @@ import { toast } from "sonner";
 import React from "react";
 import Footer from "./footer";
 
-export default function WithUserLayout(props: any) {
+export default function WithUserLayout(props: {
+	user: string;
+	children: React.ReactNode;
+}) {
 	const user = props.user;
 
 	return (

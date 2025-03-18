@@ -27,7 +27,7 @@ export default function InterviewQuestionnaire({
 		if (interviewQuestions.length > 0) {
 			setAnswers(Array(interviewQuestions.length).fill(""));
 		}
-	}, [interviewQuestions]);
+	}, [interviewQuestions, setAnswers]);
 
 	return (
 		<Card>

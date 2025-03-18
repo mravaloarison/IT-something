@@ -12,6 +12,7 @@ import {
 	CardTitle,
 	CardDescription,
 } from "@/components/ui/card";
+import Image from "next/image";
 
 interface AuthenticationViewProps {
 	signup: boolean;
@@ -41,9 +42,10 @@ export default function AuthenticationView({
 						</span>
 					</div>
 					<Button onClick={ContinueWithGoogle} variant="outline">
-						<img
+						<Image
 							src="https://img.icons8.com/?size=100&id=17949&format=png&color=000000"
 							className="w-5 h-5"
+							alt="Google"
 						/>
 						Continue with Google
 					</Button>

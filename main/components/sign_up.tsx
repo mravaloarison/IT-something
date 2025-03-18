@@ -66,10 +66,18 @@ export default function SignUpForm() {
 				const errorCode = error.code;
 				const errorMessage = error.message;
 
-				errorCode === "auth/email-already-in-use"
-					? toast.warning("Email already in use")
-					: toast.error(errorMessage);
+				handleCode(errorCode, errorMessage);
 			});
+	}
+
+	function handleCode(code: string, message: string) {
+		if (code === "auth/invalid-credential") {
+			toast.warning("Invalid credential");
+			console.log(message);
+		} else {
+			toast.error("Something went wrong");
+			console.log(message);
+		}
 	}
 
 	return (

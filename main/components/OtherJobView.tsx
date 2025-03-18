@@ -50,7 +50,7 @@ export default function OtherJobView({
 				});
 				setIsLoading(false);
 			}
-		} catch (e) {
+		} catch {
 			toast.error("Please try again, something went wrong", {
 				duration: 3000,
 			});

@@ -20,7 +20,6 @@ import {
 	DialogTitle,
 } from "@/components/ui/dialog";
 import Loading from "@/components/Loading";
-import { useRouter } from "next/compat/router";
 
 export default function InterviewPage() {
 	const [interviewQuestions, setInterviewQuestions] = useState([]);
@@ -32,7 +31,6 @@ export default function InterviewPage() {
 	const [isDialogOpen, setIsDialogOpen] = useState(false);
 	const [user, setUser] = useState<string | null>(null);
 	const [isFeedbackLoading, setIsFeedbackLoading] = useState(false);
-	const router = useRouter();
 
 	useEffect(() => {
 		const unsubscribe = onAuthStateChanged(auth, async (authUser) => {

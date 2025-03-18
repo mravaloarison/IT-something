@@ -1,4 +1,4 @@
-import { GoogleGenerativeAI, SchemaType } from "@google/generative-ai";
+import { GoogleGenerativeAI } from "@google/generative-ai";
 
 
 export async function POST(request: Request): Promise<Response> {
