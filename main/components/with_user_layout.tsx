@@ -6,7 +6,7 @@ import React from "react";
 import Footer from "./footer";
 
 export default function WithUserLayout(props: {
-	user: string;
+	user: string | null;
 	children: React.ReactNode;
 }) {
 	const user = props.user;
