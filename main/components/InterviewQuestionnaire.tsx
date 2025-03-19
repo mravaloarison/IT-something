@@ -60,7 +60,9 @@ export default function InterviewQuestionnaire({
 		if (interviewQuestions.length > 0) {
 			setAnswers(Array(interviewQuestions.length).fill(""));
 		}
+	}, [interviewQuestions]);
 
+	useEffect(() => {
 		if (transcript && currentQuestion < interviewQuestions.length) {
 			const updatedAnswers = [...answers];
 			updatedAnswers[currentQuestion] = transcript;
