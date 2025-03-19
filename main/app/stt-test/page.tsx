@@ -17,7 +17,7 @@ export default function Page() {
 	} = useSpeechRecognition();
 
 	if (!browserSupportsSpeechRecognition) {
-		return <div>Browser doesn't support speech recognition.</div>;
+		return <div>Browser do not support speech recognition.</div>;
 	}
 
 	if (!isMicrophoneAvailable) {

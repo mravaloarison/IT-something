@@ -61,7 +61,7 @@ export default function InterviewQuestionnaire({
 			<div className="h-screen w-screen flex flex-col gap-6 items-center p-6 justify-center">
 				<TriangleAlert size={48} />
 				<p className="font-semibold text-lg">
-					Browser doesn't support speech recognition.
+					Browser do not support speech recognition.
 				</p>
 				<Link href="/" className="text-blue-500">
 					Go back
@@ -89,15 +89,13 @@ export default function InterviewQuestionnaire({
 		if (interviewQuestions.length > 0) {
 			setAnswers(Array(interviewQuestions.length).fill(""));
 		}
-	}, [interviewQuestions]);
 
-	useEffect(() => {
 		if (transcript && currentQuestion < interviewQuestions.length) {
 			const updatedAnswers = [...answers];
 			updatedAnswers[currentQuestion] = transcript;
 			setAnswers(updatedAnswers);
 		}
-	}, [transcript, currentQuestion]);
+	}, [transcript, currentQuestion, interviewQuestions]);
 
 	return (
 		<Card>
