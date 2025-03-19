@@ -48,7 +48,6 @@ export default function AuthenticationView({
 							width={20}
 							height={20}
 						/>
-						<img></img>
 						Continue with Google
 					</Button>
 				</div>

@@ -56,6 +56,18 @@ export default function InterviewQuestionnaire({
 		setCurrentQuestion((prev) => prev - 1);
 	};
 
+	useEffect(() => {
+		if (interviewQuestions.length > 0) {
+			setAnswers(Array(interviewQuestions.length).fill(""));
+		}
+
+		if (transcript && currentQuestion < interviewQuestions.length) {
+			const updatedAnswers = [...answers];
+			updatedAnswers[currentQuestion] = transcript;
+			setAnswers(updatedAnswers);
+		}
+	}, [transcript, currentQuestion, interviewQuestions]);
+
 	if (!browserSupportsSpeechRecognition) {
 		return (
 			<div className="h-screen w-screen flex flex-col gap-6 items-center p-6 justify-center">
@@ -84,18 +96,6 @@ export default function InterviewQuestionnaire({
 			</div>
 		);
 	}
-
-	useEffect(() => {
-		if (interviewQuestions.length > 0) {
-			setAnswers(Array(interviewQuestions.length).fill(""));
-		}
-
-		if (transcript && currentQuestion < interviewQuestions.length) {
-			const updatedAnswers = [...answers];
-			updatedAnswers[currentQuestion] = transcript;
-			setAnswers(updatedAnswers);
-		}
-	}, [transcript, currentQuestion, interviewQuestions]);
 
 	return (
 		<Card>
