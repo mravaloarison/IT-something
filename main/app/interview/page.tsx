@@ -90,7 +90,7 @@ export default function InterviewPage() {
 				);
 
 				console.log(e);
-				
+
 				setIsFeedbackLoading(false);
 			});
 	};
@@ -203,7 +203,11 @@ export default function InterviewPage() {
 			<main className="max-w-xl mx-auto p-6">
 				<div>
 					{error ? (
-						<p className="text-red-500">{error}</p>
+						<p className="text-red-500">
+							{error}. We're experiencing high traffic on our
+							servers. Please try signing out and signing back in,
+							or wait a few minutes before refreshing the page.
+						</p>
 					) : (
 						<>
 							{interviewQuestions.length > 0 ? (
