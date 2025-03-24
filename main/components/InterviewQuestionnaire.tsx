@@ -128,7 +128,7 @@ export default function InterviewQuestionnaire({
 					>
 						<ChevronLeft />
 					</Button>
-					<div className="flex gap-4 sm:gap-6 items-center">
+					<div className="flex gap-2 sm:gap-6 items-center">
 						{listening ? (
 							<Button
 								variant="secondary"
