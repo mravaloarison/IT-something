@@ -204,7 +204,7 @@ export default function InterviewPage() {
 				<div>
 					{error ? (
 						<p className="text-red-500">
-							{error}. We're experiencing high traffic on our
+							{error}. We are experiencing high traffic on our
 							servers. Please try signing out and signing back in,
 							or wait a few minutes before refreshing the page.
 						</p>
