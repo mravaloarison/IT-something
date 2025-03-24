@@ -83,7 +83,7 @@ export default function InterviewPage() {
 			})
 			.catch((e) => {
 				toast.error(
-					"Something went wrong while generating the feedback, please try reloading the page",
+					"We're experiencing high traffic on our servers. Please try signing out and signing back in, or wait a few minutes before refreshing the page or try again later.",
 					{
 						duration: 5000,
 					}
