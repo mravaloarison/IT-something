@@ -81,10 +81,12 @@ export default function InterviewPage() {
 				localStorage.setItem("feedbackData", JSON.stringify(data));
 				window.location.href = "/feedback";
 			})
-			.catch(() => {
+			.catch((e) => {
 				toast.error("Error getting feedback", {
 					duration: 3000,
 				});
+
+				console.log(e);
 
 				setIsFeedbackLoading(false);
 			});
