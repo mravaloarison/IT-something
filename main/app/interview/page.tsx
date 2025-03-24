@@ -82,11 +82,9 @@ export default function InterviewPage() {
 				window.location.href = "/feedback";
 			})
 			.catch((e) => {
-				toast.error("Error getting feedback", {
+				toast.error("Error getting feedback: " + e.error, {
 					duration: 3000,
 				});
-
-				console.log(e);
 
 				setIsFeedbackLoading(false);
 			});
