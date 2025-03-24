@@ -89,6 +89,8 @@ export default function InterviewPage() {
 					}
 				);
 
+				console.log(e);
+				
 				setIsFeedbackLoading(false);
 			});
 	};
