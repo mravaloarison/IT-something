@@ -1,36 +1,61 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
+# Slay Interview
 
-## Getting Started
+🔗 [Live Demo](https://main.dp8j1r5isx3e7.amplifyapp.com/)  
+🔗 [GitHub Repository](https://github.com/mravaloarison/IT-something)  
+🔗 [Devpost Submission](https://devpost.com/software/hackyourinterview)
 
-First, run the development server:
+## 🏆 About the Project
 
-```bash
-npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
-```
+Originally built in just **three days** at a 2023 hackathon at **Stony Brook University**, this us an AI-powered mock interview platform awarded **Best Overall Project** back then.
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+## 💡 Key Features
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
+-   🔐 **Secure Authentication**  
+    Firebase-based login and sign-up with security rules.
 
-This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
+-   🤖 **AI-Powered Question Generation**  
+    Context-aware questions generated using the Gemini API.
 
-## Learn More
+-   🧠 **Smart Feedback**  
+    Fine-tuned AI offers helpful, real-time feedback on user responses.
 
-To learn more about Next.js, take a look at the following resources:
+-   🎙️ **Voice Interaction**  
+    Uses Google Cloud APIs for speech-to-text and text-to-speech functionality.
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
+-   🔎 **Data Persistence**  
+    Firestore stores user inputs, feedback, and progress securely.
 
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
+-   🖥️ **Responsive UI/UX**  
+    Built with Next.js and ShadcnUI for a clean, mobile-friendly experience.
 
-## Deploy on Vercel
+-   🚀 **Live on AWS Amplify**  
+    Publicly accessible and optimized for scalability.
 
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
+## 🧱 Tech Stack
 
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
+-   **Frontend**: Next.js, ShadcnUI, Figma (for design prototyping)
+-   **Backend & Auth**: Firebase, Firestore
+-   **AI Integration**: Gemini API (fine-tuned)
+-   **Voice Services**: Google Cloud Speech APIs
+-   **Deployment**: AWS Amplify
+
+## 📆 Development Timeline
+
+### Hackathon (Original Build - 3 Days)
+
+-   Conceptualized, designed, and developed MVP
+-   Implemented AI interview generation and voice interaction
+-   Deployed early version live for judging
+
+### Post-Hackathon Refinement
+
+-   Improved UI and user flow
+-   Enhanced AI accuracy with fine-tuning
+-   Added real-time feedback and security layers
+-   Full deployment and testing on AWS Amplify
+
+## 🚨 Security & Testing
+
+-   Firebase security rules implemented for authentication and Firestore access
+-   Protected against unauthorized data entry and injection
+-   Thoroughly tested on both local and staging environments
