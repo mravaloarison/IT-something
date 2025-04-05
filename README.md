@@ -6,7 +6,7 @@
 
 ## 🏆 About the Project
 
-Originally built in just **three days** at a 2023 hackathon at **Stony Brook University**, this us an AI-powered mock interview platform awarded **Best Overall Project** back then.
+Originally built in just **three days** at a 2023 hackathon at **Stony Brook University**, this is an AI-powered mock interview platform awarded **Best Overall Project** back then.
 
 ## 💡 Key Features
 
